@@ -17,12 +17,10 @@ formdata.append("time", "10");
 
 const requestOptions = {
   method: "POST",
-  headers: myHeaders,
   body: formdata,
-  redirect: "follow"
 };
 
-fetch("http://127.0.0.1:5000/predict", requestOptions)
+fetch("http://mahoraga.awscloudclub.id/predict", requestOptions)
   .then((response) => response.text())
   .then((result) => console.log(result))
   .catch((error) => console.error(error));

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Failure Prediction</title>
+</head>
+<body>
+    <h1>Heart Failure Prediction</h1>
+    <form id="prediction-form">
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+        
+        <label for="anaemia">Anaemia (0 for No, 1 for Yes):</label>
+        <input type="number" id="anaemia" name="anaemia" required><br><br>
+        
+        <label for="creatinine_phosphokinase">Creatinine Phosphokinase:</label>
+        <input type="number" id="creatinine_phosphokinase" name="creatinine_phosphokinase" required><br><br>
+        
+        <label for="diabetes">Diabetes (0 for No, 1 for Yes):</label>
+        <input type="number" id="diabetes" name="diabetes" required><br><br>
+        
+        <label for="ejection_fraction">Ejection Fraction:</label>
+        <input type="number" id="ejection_fraction" name="ejection_fraction" required><br><br>
+        
+        <label for="high_blood_pressure">High Blood Pressure (0 for No, 1 for Yes):</label>
+        <input type="number" id="high_blood_pressure" name="high_blood_pressure" required><br><br>
+        
+        <label for="platelets">Platelets:</label>
+        <input type="number" id="platelets" name="platelets" step="0.01" required><br><br>
+        
+        <label for="serum_creatinine">Serum Creatinine:</label>
+        <input type="number" id="serum_creatinine" name="serum_creatinine" step="0.01" required><br><br>
+        
+        <label for="serum_sodium">Serum Sodium:</label>
+        <input type="number" id="serum_sodium" name="serum_sodium" required><br><br>
+        
+        <label for="sex">Sex (0 for Female, 1 for Male):</label>
+        <input type="number" id="sex" name="sex" required><br><br>
+        
+        <label for="smoking">Smoking (0 for No, 1 for Yes):</label>
+        <input type="number" id="smoking" name="smoking" required><br><br>
+        
+        <label for="time">Time:</label>
+        <input type="number" id="time" name="time" required><br><br>
+        
+        <button type="submit">Predict</button>
+    </form>
+
+    <div id="prediction-result"></div>
+
+    <script>
+        document.getElementById("prediction-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(this);
+
+            console.log(formData);
+
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("prediction-result").innerHTML = "<p>Prediction: " + data.message + "</p>";
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

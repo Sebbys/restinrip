@@ -1,13 +1,18 @@
 import os
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request,render_template
 from flask_cors import CORS
 import joblib
 
 app = Flask(__name__)
 CORS(app)
 
+
 # Load the trained model
 model = joblib.load('decision_tree_model.joblib')
+
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/predict', methods=['POST','GET'])
 def predict():
