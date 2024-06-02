@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Predict Patient Survival</title>
+</head>
+<body>
+  <h1>Predict Patient Survival</h1>
+  <div id="prediction"></div>
+
+  <script>
+    // JavaScript code
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const data = {
+      age: "62",
+      anaemia: "0",
+      creatinine_phosphokinase: "231.0",
+      diabetes: "0",
+      ejection_fraction: "25",
+      high_blood_pressure: "1",
+      platelets: "253000.0",
+      serum_creatinine: "0.9",
+      serum_sodium: "140",
+      sex: "1",
+      smoking: "1",
+      time: "10"
+    };
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify(data),
+      redirect: "follow"
+    };
+
+    fetch("http://127.0.0.1:5000/predict", requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          document.getElementById('prediction').textContent = `Error: ${data.error}`;
+        } else {
+          document.getElementById('prediction').textContent = `Prediction: ${data.message}`;
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        document.getElementById('prediction').textContent = `Error: ${error}`;
+      });
+  </script>
+</body>
+</html>
